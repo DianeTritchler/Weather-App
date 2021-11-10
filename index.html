@@ -12,26 +12,32 @@
     <body>
         <header>Weather Dashboard</header>
 
-        <div>
-            <div class="leftColum">
-                <label for="cityInput">Search for a City:</label>
-                <br>
+        <div class="row">
+            <div class="leftColumn">
+                <h2 id="cityInput">Search for a City:</h2>
                 <input type="text" placeholder="Enter Your City" name="cityInput" id="cityInput">
                 <br>
                 <button class="button" type="search" id="searchBtn">Search</button>
+                <br>
+                <button class="presetBtn" type="search" id="clevelandBtn">Cleveland</button>
+                <br>
+                <button class="presetBtn" type="search" id="sanAntonioBtn">San Antonio</button>
+                <br>
+                <button class="presetBtn" type="search" id="austinBtn">Austin</button>
+                <br>
+                <button class="presetBtn" type="search" id="chicagoBtn">Chicago</button>
             </div>
 
-            <div class="rightColum">
+            <div class="rightColumn">
                 <div class="todayForcast" id="todayForcast">
-
+                    <h2 id="cityTitle"></h2>
                 </div>
-                <div class="fiveDayForcast">
-                    <text>5-Day Forecast:</text>
-                    <div class="todayPlus1"></div>
-                    <div class="todayPlus2"></div>
-                    <div class="todayPlus3"></div>
-                    <div class="todayPlus4"></div>
-                    <dif class="todayPlus5"></dif>
+                
+                <h3>5-Day Forecast:</h3>
+
+                <div class="fiveDayForcast" id="fiveDayForcast">
+                    
+            
                 </div>
             </div>
         </div>

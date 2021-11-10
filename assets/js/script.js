@@ -1,5 +1,9 @@
 // Variables
 var searchBtn = document.querySelector("#searchBtn");
+var clevelandBtn = document.querySelector("#clevelandBtn");
+var sanAntonioBtn = document.querySelector("#sanAntonioBtn");
+var austinBtn = document.querySelector("#austinBtn");
+var chicagoBtn = document.querySelector("#chicagoBtn");
 var apiKey = "d2e8aafe7d135c3adf2f2bacf7f90ca4";
 var latitude = "";
 var longitude = "";
@@ -9,49 +13,64 @@ searchBtn.addEventListener("click", function(event) {
     var city = document.querySelector("#cityInput").value;
 
     getLatLong(city);
-    currentWeather(city);
-    //findWeather();
 });
 
+clevelandBtn.addEventListener("click", function(){
+    var city = "Cleveland";
+    getLatLong(city);
+});
+
+sanAntonioBtn.addEventListener("click", function(){
+    var city = "San Antonio";
+    getLatLong(city);
+});
+
+austinBtn.addEventListener("click", function(){
+    var city = "Austin";
+    getLatLong(city);
+});
+
+chicagoBtn.addEventListener("click", function(){
+    var city = "Chicago";
+    getLatLong(city);
+});
 
 function currentWeather(city){
     
     var currentWeatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude 
-            + "&appid=" + apiKey;
+            + "&units=imperial&appid=" + apiKey;
     var currentDIV = document.querySelector("#todayForcast");
-    var cityTitle = document.createElement("h2");
+    var cityTitle = document.querySelector("#cityTitle");
     var infoEl = document.createElement("p");
-    var temp = document.createElement("ul");
-    var wind = document.createElement("ul");
-    var humidity = document.createElement("ul");
-    var uvIndex = document.createElement("ul");
+    var temp = document.createElement("p");
+    var wind = document.createElement("p");
+    var humidity = document.createElement("p");
+    var uvIndex = document.createElement("p");
 
-    console.log(latitude +" , "+longitude);
-    console.log(currentWeatherURL);
+    
 
     cityTitle.innerHTML = city + " (" + moment().format('MM/DD/YYYY') + ")";
     currentDIV.appendChild(cityTitle);
-
-    console.log(cityTitle);
 
     fetch(currentWeatherURL)
         .then(function(response){
             if(response.ok){
                 response.json().then(function (data){
                     console.log(data);
-                    console.log(data['main']['temp']);
 
-                    temp.innerHTML = "Temp: " + data['main']['temp'] + " F";//Degree sign?
+                    temp.innerHTML = "Temp: " + data['current']['temp'] + " F";//Degree sign?
                     infoEl.appendChild(temp);
-                    wind.innerHTML = "Wind: " + data['wind']['speed'] + " MPH";
+                    wind.innerHTML = "Wind: " + data['current']['wind_speed'] + " MPH";
                     infoEl.appendChild(wind);
-                    humidity.innerHTML = "Humidity: " + data['main']['humidity'] +"%";
+                    humidity.innerHTML = "Humidity: " + data['current']['humidity'] +"%";
                     infoEl.appendChild(humidity);
-                    //uvIndex.innerHTML = "UV Index: " + data[]
+                    uvIndex.innerHTML = "UV Index: " + data['current']['uvi'];
+                    infoEl.appendChild(uvIndex);
 
                     //Puts infoEl in current Weather DIV
                     currentDIV.appendChild(infoEl);
 
+                    forcast(data);
                 })
             }
             else{
@@ -60,10 +79,50 @@ function currentWeather(city){
         })
 }
 
+function forcast(data){
+    var date = moment().format('MM/DD/YYYY');
+    var forcastDIV = document.querySelector("#fiveDayForcast");
+    
+
+    for(var i = 0; i < 5; i++){
+        var infoEl = document.createElement('div');
+        infoEl.setAttribute("id", "forcastDIV");
+        var temp = document.createElement('p');
+        var wind = document.createElement('p');
+        var humidity = document.createElement('p');
+        var formatedDate = document.createElement('p');
+        var icon = document.createElement('img');
+
+        date = moment().add( (i+1) , 'days');
+        formatedDate.innerText = date.format('MM') + "/" + date.format('DD') + "/" + date.format('YYYY');
+
+        infoEl.appendChild(formatedDate);
+
+        var holderID = data['daily'][i]['weather']['0']['id'];
+        var iconID = weatherID[holderID];
+        var src = "http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
+        icon.src = src;
+
+        infoEl.appendChild(icon);
+
+        temp.innerText = "Temp: " + data['daily'][i]['temp']['day'] + " F"; //Degree Symbol
+        infoEl.appendChild(temp);
+        wind.innerText = "Wind: " + data['daily'][i]['wind_speed'] + "MPH";
+        infoEl.appendChild(wind);
+        humidity.innerText = "Humidity: " + data['daily'][i]['humidity'] + "%";
+        infoEl.appendChild(humidity);
+
+        forcastDIV.appendChild(infoEl);
+        
+
+    }
+    
+
+}
 
 
 function getLatLong(city){
-    event.preventDefault();
+    
     var geocodingURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
 
     fetch(geocodingURL)
@@ -72,7 +131,7 @@ function getLatLong(city){
                 response.json().then(function (data) {
                     latitude = data[0]['lat'];
                     longitude = data[0]['lon'];
-                    console.log(latitude +" , "+longitude);
+                    currentWeather(city);
                 });
             }
             else{
@@ -82,4 +141,62 @@ function getLatLong(city){
         .catch(function (error){
             alert("Unable to connect to get Lat/Long");
         })
+}
+
+let weatherID = {
+    200: "11",
+    201: "11",
+    202: "11",
+    210: "11",
+    211: "11",
+    212: "11",
+    221: "11",
+    230: "11",
+    231: "11",
+    232: "11",
+    300: "09",
+    301: "09",
+    302: "09",
+    310: "09",
+    311: "09",
+    312: "09", 
+    313: "09",
+    314: "09",
+    321: "09",
+    500: "10",
+    501: "10",
+    502: "10",
+    503: "10",
+    504: "10", 
+    511: "13",
+    520: "09",
+    521: "09",
+    522: "09",
+    531: "09",
+    600: "13",
+    601: "13",
+    602: "13",
+    611: "13",
+    612: "13",
+    613: "13",
+    615: "13",
+    616: "13",
+    620: "13",
+    621: "13",
+    622: "13",
+    701: "50",
+    711: "50",
+    721: "50",
+    731: "50",
+    741: "50",
+    751: "50",
+    761: "50", 
+    762: "50",
+    771: "50",
+    781: "50",
+    800: "01",
+    801: "02",
+    802: "03",
+    803: "04",
+    804: "04"
 }
