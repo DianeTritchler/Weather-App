@@ -113,7 +113,7 @@ function currentWeather(city){
 
                     var holderID = data['current']['weather']['0']['id'];
                     var iconID = weatherID[holderID];
-                    var src = "https://cors-anywhere.herokuapp.com/http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
+                    var src = "http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
                     icon.src = src;
 
                     infoEl.appendChild(icon);
@@ -172,7 +172,7 @@ function forcast(data){
 
         var holderID = data['daily'][i]['weather']['0']['id'];
         var iconID = weatherID[holderID];
-        var src = "https://cors-anywhere.herokuapp.com/http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
+        var src = "http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
         icon.src = src;
 
         infoEl.appendChild(icon);
