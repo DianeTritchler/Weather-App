@@ -4,48 +4,101 @@ var clevelandBtn = document.querySelector("#clevelandBtn");
 var sanAntonioBtn = document.querySelector("#sanAntonioBtn");
 var austinBtn = document.querySelector("#austinBtn");
 var chicagoBtn = document.querySelector("#chicagoBtn");
+var forcastDIV = document.querySelector("#fiveDayForcast");
+var currentDIV = document.querySelector("#todayForcast");
 var apiKey = "d2e8aafe7d135c3adf2f2bacf7f90ca4";
 var latitude = "";
 var longitude = "";
 
 // Search Button Listener
-searchBtn.addEventListener("click", function(event) {
+searchBtn.addEventListener("click", function() {
     var city = document.querySelector("#cityInput").value;
+    
+    while(forcastDIV.firstChild){
+        forcastDIV.removeChild(forcastDIV.firstChild);
 
+    }
+    
+    while(currentDIV.firstChild){
+        currentDIV.removeChild(currentDIV.firstChild);
+    }
+    
     getLatLong(city);
 });
 
 clevelandBtn.addEventListener("click", function(){
+
+    while(forcastDIV.firstChild){
+        forcastDIV.removeChild(forcastDIV.firstChild);
+
+    }
+    
+    while(currentDIV.firstChild){
+        currentDIV.removeChild(currentDIV.firstChild);
+    }
+
     var city = "Cleveland";
     getLatLong(city);
 });
 
 sanAntonioBtn.addEventListener("click", function(){
+
+    while(forcastDIV.firstChild){
+        forcastDIV.removeChild(forcastDIV.firstChild);
+
+    }
+    
+    while(currentDIV.firstChild){
+        currentDIV.removeChild(currentDIV.firstChild);
+    }
+
     var city = "San Antonio";
     getLatLong(city);
 });
 
 austinBtn.addEventListener("click", function(){
+
+    while(forcastDIV.firstChild){
+        forcastDIV.removeChild(forcastDIV.firstChild);
+
+    }
+    
+    while(currentDIV.firstChild){
+        currentDIV.removeChild(currentDIV.firstChild);
+    }
+
     var city = "Austin";
     getLatLong(city);
 });
 
 chicagoBtn.addEventListener("click", function(){
+
+    while(forcastDIV.firstChild){
+        forcastDIV.removeChild(forcastDIV.firstChild);
+
+    }
+    
+    while(currentDIV.firstChild){
+        currentDIV.removeChild(currentDIV.firstChild);
+    }
+    
     var city = "Chicago";
     getLatLong(city);
 });
 
+
 function currentWeather(city){
     
-    var currentWeatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude 
+    var currentWeatherURL = "http://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude 
             + "&units=imperial&appid=" + apiKey;
-    var currentDIV = document.querySelector("#todayForcast");
-    var cityTitle = document.querySelector("#cityTitle");
+     
+    var cityTitle = document.createElement("h2");
     var infoEl = document.createElement("p");
     var temp = document.createElement("p");
     var wind = document.createElement("p");
     var humidity = document.createElement("p");
     var uvIndex = document.createElement("p");
+    var icon = document.createElement('img');
 
     
 
@@ -58,6 +111,13 @@ function currentWeather(city){
                 response.json().then(function (data){
                     console.log(data);
 
+                    var holderID = data['current']['weather']['0']['id'];
+                    var iconID = weatherID[holderID];
+                    var src = "http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
+                    icon.src = src;
+
+                    infoEl.appendChild(icon);
+
                     temp.innerHTML = "Temp: " + data['current']['temp'] + " F";//Degree sign?
                     infoEl.appendChild(temp);
                     wind.innerHTML = "Wind: " + data['current']['wind_speed'] + " MPH";
@@ -65,6 +125,18 @@ function currentWeather(city){
                     humidity.innerHTML = "Humidity: " + data['current']['humidity'] +"%";
                     infoEl.appendChild(humidity);
                     uvIndex.innerHTML = "UV Index: " + data['current']['uvi'];
+                    
+
+                    if(data['current']['uvi']<2){
+                        uvIndex.style.background = "#75e081";
+                    }
+                    else if (data['current']['uvi']<7) {
+                        uvIndex.style.background = "#faff75";
+                    } 
+                    else if(data['current']['uvi']>7){
+                        uvIndex.style.background = "#e62525";
+                    }
+
                     infoEl.appendChild(uvIndex);
 
                     //Puts infoEl in current Weather DIV
@@ -81,7 +153,7 @@ function currentWeather(city){
 
 function forcast(data){
     var date = moment().format('MM/DD/YYYY');
-    var forcastDIV = document.querySelector("#fiveDayForcast");
+    
     
 
     for(var i = 0; i < 5; i++){
@@ -200,3 +272,4 @@ let weatherID = {
     803: "04",
     804: "04"
 }
+

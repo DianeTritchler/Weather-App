@@ -4,7 +4,8 @@
     border-color: black;
     width: 80%;
     height: 300px;
-    margin-left: 50px;    
+    margin-left: 50px;
+    padding: 20px;    
 }
 
 #forcastDIV{
@@ -35,7 +36,7 @@ header{
 input{
     height: 30px;
     width: 80%;
-}
+} 
 
 img{
     height: 50px;
@@ -43,6 +44,7 @@ img{
 
 p{
     margin-top: 5px;
+    width: fit-content;
 }
 
 #cityInput{
@@ -53,7 +55,7 @@ p{
 .leftColumn{
     width: 20%;
     float: left;
-}
+} 
 
 .rightColumn{
     width: 80%;
@@ -61,7 +63,7 @@ p{
 }
 
 h3{
-    width: 80%;
+    width: 100%;
     margin-left: 50px;
 }
 
@@ -72,4 +74,22 @@ h3{
     background-color: turquoise;
     font-size: medium;
     border-radius: 5px;
+} 
+
+#searchBtn{
+    height: 30px;
+    width: 75%;
+    margin: 10px;
+    background-color: lightgrey;
+    font-size: medium;
+    border-radius: 5px;
+}
+
+label{
+    font-size: large;
+    font-style: bold;
+}
+
+#fiveDayForcast{
+    margin-left: 50px;
 }
