@@ -1,5 +1,7 @@
 ### Weather Dashboard
 
+** The API will only work if you first click this link and request temporary demo access https://cors-anywhere.herokuapp.com **
+
 User Story:
 
 AS A traveler
