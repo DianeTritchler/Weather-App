@@ -89,7 +89,7 @@ chicagoBtn.addEventListener("click", function(){
 
 function currentWeather(city){
     
-    var currentWeatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude 
+    var currentWeatherURL = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude 
             + "&units=imperial&appid=" + apiKey;
      
     var cityTitle = document.createElement("h2");
@@ -113,7 +113,7 @@ function currentWeather(city){
 
                     var holderID = data['current']['weather']['0']['id'];
                     var iconID = weatherID[holderID];
-                    var src = "https://openweathermap.org/img/wn/" + iconID + "d@2x.png";
+                    var src = "https://cors-anywhere.herokuapp.com/http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
                     icon.src = src;
 
                     infoEl.appendChild(icon);
@@ -172,7 +172,7 @@ function forcast(data){
 
         var holderID = data['daily'][i]['weather']['0']['id'];
         var iconID = weatherID[holderID];
-        var src = "https://openweathermap.org/img/wn/" + iconID + "d@2x.png";
+        var src = "https://cors-anywhere.herokuapp.com/http://openweathermap.org/img/wn/" + iconID + "d@2x.png";
         icon.src = src;
 
         infoEl.appendChild(icon);
@@ -195,7 +195,7 @@ function forcast(data){
 
 function getLatLong(city){
     
-    var geocodingURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
+    var geocodingURL = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
 
     fetch(geocodingURL)
         .then(function(response){
